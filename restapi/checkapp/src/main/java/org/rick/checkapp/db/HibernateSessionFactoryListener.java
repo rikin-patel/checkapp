@@ -15,6 +15,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.jasypt.hibernate4.encryptor.HibernatePBEEncryptorRegistry;
 
 @WebListener
 public class HibernateSessionFactoryListener implements ServletContextListener {
@@ -41,6 +43,11 @@ public class HibernateSessionFactoryListener implements ServletContextListener {
     	
     	servletContextEvent.getServletContext().setAttribute("SessionFactory", sessionFactory);
     	System.out.println("Hibernate SessionFactory Configured successfully");
+    	
+    	StandardPBEStringEncryptor strongEncryptor = new StandardPBEStringEncryptor();
+        strongEncryptor.setPassword("CheckApp$123!");
+        HibernatePBEEncryptorRegistry registry = HibernatePBEEncryptorRegistry.getInstance();
+        registry.registerPBEStringEncryptor("checkappStringEncryptor", strongEncryptor);
     }
 	
 }
