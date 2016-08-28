@@ -24,10 +24,20 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html'
+	})
+  
   .state('app', {
     url: '/app',
     templateUrl: 'templates/first.html'
   })
+  
+	.state('newuser', {
+    url: '/newuser',
+    templateUrl: 'templates/newuser.html'
+	})
   
    .state('groups', {
       url: '/groups',
@@ -45,5 +55,5 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     })
 	
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app');
+  $urlRouterProvider.otherwise('/login');
 });
