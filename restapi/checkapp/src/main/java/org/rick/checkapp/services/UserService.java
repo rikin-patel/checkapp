@@ -3,6 +3,7 @@
  */
 package org.rick.checkapp.services;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -24,6 +25,7 @@ public class UserService {
 		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 		try{
+			user.setRegDate(new Date());
 			session.save(user);
 			session.flush();
 			session.getTransaction().commit();

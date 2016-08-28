@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['newUserServices'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -41,19 +41,31 @@ angular.module('starter.controllers', [])
   };
 })
 
+.controller('NewUserController', ['$scope', 'NewUser',
+  function($scope, NewUser) {
+
+    $scope.createUser = function(user) {
+        alert(angular.toJson(user, true));
+		var data = angular.toJson(user, true);
+		NewUser.save({},data);
+    };
+  }
+])
+
+var newUserServices = angular.module('newUserServices', ['ngResource']);
+
+newUserServices.factory('NewUser', ['$resource',
+  function($resource) {
+    return $resource('http://localhost:8080/checkapp/webapi/user', {}, {
+		save: {method:'POST', headers: {'Content-Type': 'application/json'}}
+	});
+  }
+])
+
 .controller('MyCtrl',function MyCtrl($scope, $ionicHistory) {
   $scope.myGoBack = function() {
     $ionicHistory.goBack();
   };
 })
 
-.controller('GroupsController', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
+

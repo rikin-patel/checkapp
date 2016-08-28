@@ -36,7 +36,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   
 	.state('newuser', {
     url: '/newuser',
-    templateUrl: 'templates/newuser.html'
+    templateUrl: 'templates/newuser.html',
+	controller: 'NewUserController'
 	})
   
    .state('groups', {
