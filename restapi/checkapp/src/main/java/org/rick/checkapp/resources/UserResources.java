@@ -3,6 +3,8 @@
  */
 package org.rick.checkapp.resources;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -14,6 +16,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.rick.checkapp.model.Users;
 import org.rick.checkapp.services.UserService;
@@ -33,8 +36,12 @@ public class UserResources {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Users createUser(Users user){
-		return userServices.createUser(context, user);
+	public Response createUser(Users user) throws URISyntaxException{
+		Users newUser = userServices.createUser(context, user);
+		return Response.created(new URI("/checkapp/webapi/user/" + newUser.getUserId()))
+				.header("Access-Control-Allow-Origin", "*")
+				.entity(newUser).build();
+		
 	}
 	
 	@GET

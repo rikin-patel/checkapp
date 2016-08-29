@@ -56,8 +56,12 @@ var newUserServices = angular.module('newUserServices', ['ngResource']);
 
 newUserServices.factory('NewUser', ['$resource',
   function($resource) {
-    return $resource('http://localhost:8080/checkapp/webapi/user', {}, {
-		save: {method:'POST', headers: {'Content-Type': 'application/json'}}
+    return $resource('/checkapp/webapi/user', {}, {
+		save: {method:'POST', headers: {'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
+										'Access-Control-Allow-Credentials': 'false',
+										'Access-Control-Max-Age': '86400',
+										'Access-Control-Allow-Headers':	 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept',
+										'Content-Type': 'application/json'}}
 	});
   }
 ])
