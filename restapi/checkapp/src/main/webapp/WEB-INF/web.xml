@@ -41,7 +41,14 @@
 			<param-value>false</param-value>
 		</init-param>
 	</filter>
-
+	<filter>
+		<filter-name>AuthenticationFilter</filter-name>
+		<filter-class>org.rick.checkapp.filters.RestAuthenticationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AuthenticationFilter</filter-name>
+		<url-pattern>/webapi/*</url-pattern>
+	</filter-mapping>
 	<filter-mapping>
 		<filter-name>CORS</filter-name>
 		<url-pattern>/*</url-pattern>

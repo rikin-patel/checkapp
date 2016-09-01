@@ -12,7 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.apache.solr.client.solrj.beans.Field;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -42,6 +44,9 @@ public class Users implements Serializable {
 	private String emailAddress;
 	private Date regDate;
 	private String password;
+	
+	@Transient
+	private String modelClass = this.getClass().getName();
 //	private List<Group> groups;
 	
 	@Id  
@@ -49,12 +54,14 @@ public class Users implements Serializable {
 	public long getUserId() {
 		return userId;
 	}
+	@Field("id")
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 	public String getUserName() {
 		return userName;
 	}
+	@Field("name")
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
@@ -67,6 +74,7 @@ public class Users implements Serializable {
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
+	@Field("phone")
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
@@ -74,6 +82,7 @@ public class Users implements Serializable {
 	public String getEmailAddress() {
 		return emailAddress;
 	}
+	@Field("emailAddress")
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
@@ -81,8 +90,17 @@ public class Users implements Serializable {
 	public Date getRegDate() {
 		return regDate;
 	}
+	@Field("createDate")
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
+	}
+	@Transient
+	public String getModelClass(){
+		return this.modelClass;
+	}
+	@Field("modelClass")
+	public void setModelClass(String className){
+		this.modelClass=className;
 	}
 //	@OneToMany(mappedBy = "owner")
 //	public List<Group> getGroups() {
