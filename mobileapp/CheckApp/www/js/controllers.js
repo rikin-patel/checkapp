@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['newUserServices'])
+angular.module('starter.controllers', ['newUserServices', 'loginServices'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -52,17 +52,16 @@ angular.module('starter.controllers', ['newUserServices'])
   }
 ])
 
-var newUserServices = angular.module('newUserServices', ['ngResource']);
-
-newUserServices.factory('NewUser', ['$resource',
-  function($resource) {
-    return $resource('/checkapp/webapi/user', {}, {
-		save: {method:'POST', headers: {'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
-										'Access-Control-Allow-Credentials': 'false',
-										'Access-Control-Max-Age': '86400',
-										'Access-Control-Allow-Headers':	 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept',
-										'Content-Type': 'application/json'}}
-	});
+.controller('LoginController', ['$scope', 'Login',
+  function($scope, Login) {
+		
+		$scope.loginUser = function(login) {
+			alert(angular.toJson(login, true));
+			var authToken = btoa(login.emailAddress + ':' + login.password);
+			var userDetails = Login.passAuth(authToken,login.emailAddress).query({},authToken);
+			alert(userDetails);
+		};
+  
   }
 ])
 
@@ -71,5 +70,4 @@ newUserServices.factory('NewUser', ['$resource',
     $ionicHistory.goBack();
   };
 })
-
 

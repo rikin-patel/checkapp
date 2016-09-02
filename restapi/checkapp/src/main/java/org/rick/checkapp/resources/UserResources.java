@@ -44,10 +44,18 @@ public class UserResources {
 		
 	}
 	
-	@GET
+/*	@GET
 	@Path("/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Users> getUserByUserId(@PathParam("userId") long id){
 		return userServices.getUsersByUserId(context, id);
+	} 
+*/
+	
+	@GET
+	@Path("/{emailAddress}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Users> getUserByEmailAddress(@PathParam("emailAddress") String emailAddress){
+		return userServices.getUsersByEmailAddress(context, emailAddress);
 	}
 }

@@ -25,6 +25,14 @@ public class RestAuthenticationFilter implements javax.servlet.Filter {
 			FilterChain filter) throws IOException, ServletException {
 		if (request instanceof HttpServletRequest) {
 			HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+			
+			/* skip the URL to not to authenticate */
+			String path = httpServletRequest.getRequestURI();
+			if (path.endsWith("/user") && httpServletRequest.getMethod().equalsIgnoreCase("POST")) {
+			    filter.doFilter(request, response); // Just continue chain.
+			}
+			/* =================================== */
+			
 			String authCredentials = httpServletRequest
 					.getHeader(AUTHENTICATION_HEADER);
 
