@@ -42,7 +42,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   
    .state('groups', {
       url: '/groups',
-      templateUrl: 'templates/groups.html'
+      templateUrl: 'templates/groups.html',
+	  controller: 'GroupsController'
     })
 	
 	.state('search', {

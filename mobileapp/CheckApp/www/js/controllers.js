@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['newUserServices', 'loginServices'])
+angular.module('starter.controllers', ['newUserServices', 'loginServices','groupsServices'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -59,10 +59,16 @@ angular.module('starter.controllers', ['newUserServices', 'loginServices'])
 			alert(angular.toJson(login, true));
 			var authToken = btoa(login.emailAddress + ':' + login.password);
 			var userDetails = Login.passAuth(authToken,login.emailAddress).query({},authToken);
-			alert(userDetails);
+
 		};
-  
   }
+])
+
+.controller('GroupsController',['$scope', '$sessionStorage', 'Groups',
+  function($scope,$sessionStorage, Groups) {
+		document.getElementById("username").innerHTML=$sessionStorage.UserName;
+  }
+
 ])
 
 .controller('MyCtrl',function MyCtrl($scope, $ionicHistory) {
