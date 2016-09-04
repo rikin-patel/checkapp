@@ -18,6 +18,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.solr.client.solrj.beans.Field;
 import org.hibernate.annotations.GenericGenerator;
@@ -73,6 +74,7 @@ public class Group implements Serializable{
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	@XmlTransient
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ownerid")
 	public Users getOwner() {

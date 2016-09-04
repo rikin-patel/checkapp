@@ -49,7 +49,7 @@ public class Users implements Serializable {
 	
 	@Transient
 	private String modelClass = this.getClass().getName();
-	private Set<Group> groups;
+//	private Set<Group> groups;
 	
 	@Id  
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -104,13 +104,13 @@ public class Users implements Serializable {
 	public void setModelClass(String className){
 		this.modelClass=className;
 	}
-	@OneToMany(mappedBy = "owner")
-	public Set<Group> getGroups() {
-		return groups;
-	}
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
-	}
+//	@OneToMany(mappedBy = "owner")
+//	public Set<Group> getGroups() {
+//		return groups;
+//	}
+//	public void setGroups(Set<Group> groups) {
+//		this.groups = groups;
+//	}
 	@Type(type="password")
 	@Column(name="passwd")
 	public String getPassword() {

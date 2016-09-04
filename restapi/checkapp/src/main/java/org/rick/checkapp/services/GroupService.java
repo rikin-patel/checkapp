@@ -55,6 +55,8 @@ public class GroupService {
 	}
 
 	public Group createGroup(ServletContext context, Group group) {
+		List<Users> user = userService.getUsersByUserId(context, group.getOwnerId());
+		group.setOwner(user.get(0));
 		SessionFactory sessionFactory = (SessionFactory) context.getAttribute("SessionFactory");
 		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
