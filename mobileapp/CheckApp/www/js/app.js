@@ -31,7 +31,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   
   .state('app', {
     url: '/app',
-    templateUrl: 'templates/first.html'
+    templateUrl: 'templates/first.html',
+	controller: 'FirstPageController'
   })
   
 	.state('newuser', {
@@ -42,8 +43,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   
    .state('groups', {
       url: '/groups',
-      templateUrl: 'templates/groups.html',
-	  controller: 'GroupsController'
+      templateUrl: 'templates/groups.html'//,
+	  //controller: 'GroupsController'
     })
 	
 	.state('search', {

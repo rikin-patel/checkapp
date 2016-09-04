@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['newUserServices', 'loginServices','groupsServices'])
+angular.module('starter.controllers', ['newUserServices', 'loginServices','firstPageServices'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -64,8 +64,8 @@ angular.module('starter.controllers', ['newUserServices', 'loginServices','group
   }
 ])
 
-.controller('GroupsController',['$scope', '$sessionStorage', 'Groups',
-  function($scope,$sessionStorage, Groups) {
+.controller('FirstPageController',['$scope', '$sessionStorage', 'First',
+  function($scope,$sessionStorage, First) {
 		document.getElementById("username").innerHTML=$sessionStorage.UserName;
   }
 

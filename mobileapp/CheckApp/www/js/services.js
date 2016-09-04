@@ -51,7 +51,7 @@ loginServices.factory('Login', ['$resource','$window','$sessionStorage',
 						$sessionStorage.UserId=loggedInUser[0].userId;
 						$sessionStorage.EmailAddress=loggedInUser[0].emailAddress;
 						$sessionStorage.UserName=loggedInUser[0].userName;
-						$window.location.href="#/groups";
+						$window.location.href="#/app";
 					}else{
 						alert ("Login Failure");
 					}
@@ -63,9 +63,9 @@ loginServices.factory('Login', ['$resource','$window','$sessionStorage',
   }
 ])
 
-var groupsServices = angular.module('groupsServices', ['ngResource','ngStorage']);
+var firstPageServices = angular.module('firstPageServices', ['ngResource','ngStorage']);
 
-groupsServices.factory('Groups', ['$resource','$window','$sessionStorage',
+firstPageServices.factory('First', ['$resource','$window','$sessionStorage',
   function($resource,$window,$sessionStorage) {
     return $resource('/checkapp/webapi/user/', {}, {
 		query: {method:'GET', isArray:true,
