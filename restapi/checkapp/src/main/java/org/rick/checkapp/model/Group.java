@@ -17,7 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.apache.solr.client.solrj.beans.Field;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -29,30 +31,37 @@ import org.hibernate.annotations.Parameter;
 @Entity
 public class Group implements Serializable{
 
-	private long groupId;
+	private Long groupId;
 	private String groupName;
 	private String description;
 	private Date createDate;
-	private long ownerId;
+	@Transient
+	private Long ownerId;
 	private Users owner;
+	
+	@Transient
+	private String modelClass = this.getClass().getName();
 	
 	@Id  
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	public long getGroupId() {
+	public Long getGroupId() {
 		return groupId;
 	}
-	public void setGroupId(long groupId) {
+	@Field("id")
+	public void setGroupId(Long groupId) {
 		this.groupId = groupId;
 	}
 	public String getGroupName() {
 		return groupName;
 	}
+	@Field("name")
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
 	public String getDescription() {
 		return description;
 	}
+	@Field("description")
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -60,6 +69,7 @@ public class Group implements Serializable{
 	public Date getCreateDate() {
 		return createDate;
 	}
+	@Field("createDate")
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
@@ -71,10 +81,20 @@ public class Group implements Serializable{
 	public void setOwner(Users owner) {
 		this.owner = owner;
 	}
-	public long getOwnerId() {
+	@Transient
+	public Long getOwnerId() {
 		return ownerId;
 	}
-	public void setOwnerId(long ownerId) {
+	@Field("ownerId")
+	public void setOwnerId(Long ownerId) {
 		this.ownerId = ownerId;
+	}
+	@Transient
+	public String getModelClass(){
+		return this.modelClass;
+	}
+	@Field("modelClass")
+	public void setModelClass(String className){
+		this.modelClass=className;
 	}
 }

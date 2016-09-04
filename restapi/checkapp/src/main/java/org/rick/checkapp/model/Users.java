@@ -5,12 +5,14 @@ package org.rick.checkapp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -37,7 +39,7 @@ import org.jasypt.hibernate4.type.EncryptedStringType;
 @Entity
 public class Users implements Serializable {
 	
-	private long userId;
+	private Long userId;
 	private String userName;
 	private String countryCode;
 	private String phoneNumber;
@@ -47,15 +49,15 @@ public class Users implements Serializable {
 	
 	@Transient
 	private String modelClass = this.getClass().getName();
-//	private List<Group> groups;
+	private Set<Group> groups;
 	
 	@Id  
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	public long getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 	@Field("id")
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 	public String getUserName() {
@@ -102,13 +104,13 @@ public class Users implements Serializable {
 	public void setModelClass(String className){
 		this.modelClass=className;
 	}
-//	@OneToMany(mappedBy = "owner")
-//	public List<Group> getGroups() {
-//		return groups;
-//	}
-//	public void setGroups(List<Group> groups) {
-//		this.groups = groups;
-//	}
+	@OneToMany(mappedBy = "owner")
+	public Set<Group> getGroups() {
+		return groups;
+	}
+	public void setGroups(Set<Group> groups) {
+		this.groups = groups;
+	}
 	@Type(type="password")
 	@Column(name="passwd")
 	public String getPassword() {

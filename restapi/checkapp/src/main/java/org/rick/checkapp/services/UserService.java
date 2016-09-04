@@ -59,7 +59,7 @@ public class UserService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Users> getUsersByUserId(ServletContext context, long userId){
+	public List<Users> getUsersByUserId(ServletContext context, Long userId){
 		
 		SessionFactory sessionFactory = (SessionFactory) context.getAttribute("SessionFactory");
 		Session session = sessionFactory.getCurrentSession();

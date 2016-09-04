@@ -42,9 +42,11 @@
 		 -->
 		<field name="uuid" type="uuid" indexed="true" stored="true" required="true" multiValued="false"/>
 		<field name="id" type="string" indexed="true" stored="true" required="true" />
+		<field name="ownerId" type="string" indexed="true" stored="true"/>
 		<field name="name" type="string" indexed="true" stored="true" required="true"/>
-		<field name="emailAddress" type="string" indexed="true" stored="true" required="true"/>
-		<field name="phone" type="string" indexed="true" stored="true" required="true"/>
+		<field name="description" type="string" indexed="true" stored="true"/>
+		<field name="emailAddress" type="string" indexed="true" stored="true"/>
+		<field name="phone" type="string" indexed="true" stored="true"/>
 		<field name="createDate" type="tdate" indexed="true" stored="true" required="true"/>
 		<field name="modelClass" type="string" indexed="true" stored="true" required="true"/>
 	</fields>
