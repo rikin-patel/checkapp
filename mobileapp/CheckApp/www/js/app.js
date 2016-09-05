@@ -57,6 +57,20 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       templateUrl: 'templates/recent_groups.html'
     })
 	
+	.state('groups.newgroup', {
+      url: '/newgroup',
+	  views: {
+		'menuContent': {
+		templateUrl: 'templates/newgroup.html'
+		}
+	  }
+    })
+	
+	.state('menu', {
+		url: '/menu',
+		abstract: true,
+		templateUrl: 'templates/menu.html'
+	})
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 });
