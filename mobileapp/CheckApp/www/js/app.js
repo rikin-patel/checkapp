@@ -63,7 +63,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 		'menuContent': {
 		templateUrl: 'templates/newgroup.html'
 		}
-	  }
+	  },
+	  controller: 'NewGroupController'
     })
 	
 	.state('menu', {

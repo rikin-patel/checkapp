@@ -58,4 +58,9 @@ public class UserResources {
 	public List<Users> getUserByEmailAddress(@PathParam("emailAddress") String emailAddress){
 		return userServices.getUsersByEmailAddress(context, emailAddress);
 	}
+	
+	@Path("/{userId}/groups")
+	public GroupsResource getGroupsResource(){
+		return new GroupsResource();
+	}
 }

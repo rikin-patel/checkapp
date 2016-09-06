@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['newUserServices', 'loginServices','firstPageServices'])
+angular.module('starter.controllers', ['newUserServices', 'loginServices','firstPageServices', 'newGroupServices'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -51,6 +51,18 @@ angular.module('starter.controllers', ['newUserServices', 'loginServices','first
     };
   }
 ])
+
+.controller('NewGroupController', ['$scope', 'NewGroup',
+  function($scope, NewGroup) {
+
+    $scope.createGroup = function(group) {
+        alert(angular.toJson(group, true));
+		var data = angular.toJson(group, true);
+		NewGroup.save({},data);
+    };
+  }
+])
+
 
 .controller('LoginController', ['$scope', 'Login',
   function($scope, Login) {

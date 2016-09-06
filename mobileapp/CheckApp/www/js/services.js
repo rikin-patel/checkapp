@@ -26,6 +26,32 @@ newUserServices.factory('NewUser', ['$resource',
   }
 ])
 
+var newGroupServices = angular.module('newGroupServices', ['ngResource','ngStorage']);
+
+newGroupServices.factory('NewGroup', ['$resource','$window','$sessionStorage',
+  function($resource,$window,$sessionStorage) {
+    return $resource('/checkapp/webapi/user/'+$sessionStorage.UserId+'/groups', {}, {
+		save: {method:'POST', headers: {'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
+										'Access-Control-Allow-Credentials': 'false',
+										'Access-Control-Max-Age': '86400',
+										'Access-Control-Allow-Headers':	 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept',
+										'Content-Type': 'application/json',
+										'Authorization': $sessionStorage.Authorization},
+				transformResponse: function(data, headers, status){
+					//response={};
+					//response.data = data;
+					//response.headers = headers;
+					//return response;
+					if (status == 201 ){
+						alert(data);
+						$window.location.href="#/groups";
+					}
+					return data;
+					}}
+	});
+  }
+])
+
 
 var loginServices = angular.module('loginServices', ['ngResource','ngStorage']);
 

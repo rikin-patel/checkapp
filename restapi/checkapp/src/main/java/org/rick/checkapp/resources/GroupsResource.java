@@ -26,27 +26,24 @@ import org.rick.checkapp.services.GroupService;
  * @author Rikin Patel
  *
  */
-@Path("/groups")
+@Path("/")
 public class GroupsResource {
 	
-	@Context
-    private ServletContext context;
-
 	private GroupService groupService = new GroupService();
 
 	@GET
-	@Path("/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Group> getGroups(@PathParam("userId") Long id){
+	public List<Group> getGroups(@Context ServletContext context, @PathParam("userId") Long id){
 		return groupService.getAllGroupsOwnedBy(context, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createGroup(Group group) throws URISyntaxException{
+	public Response createGroup(@Context ServletContext context, @PathParam("userId") Long id, Group group) throws URISyntaxException{
+		group.setOwnerId(id);
 		Group newGroup = groupService.createGroup(context, group);
-		return Response.created(new URI("/checkapp/webapi/groups/" + newGroup.getGroupId()))
+		return Response.created(new URI("/checkapp/webapi/user/" + id + "/groups/" + newGroup.getGroupId()))
 				.header("Access-Control-Allow-Origin", "*")
 				.entity(newGroup).build();
 		

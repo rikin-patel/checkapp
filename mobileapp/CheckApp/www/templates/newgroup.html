@@ -1,0 +1,23 @@
+<ion-view view-title="NewGroup">
+<ion-pane>
+    <ion-header-bar class="bar-stable bar-dark">
+        <h1 class="title">New Group</h1>
+    </ion-header-bar>
+    <ion-content>
+	<form ng-controller="NewGroupController" ng-submit="createGroup(group)"> 
+		<div class="list">
+		  <label class="item item-input">
+			<input type="text" placeholder="Group Name" ng-model="group.groupName"/>
+		  </label>
+		  <label class="item item-input">
+			<input type="text" placeholder="Description" ng-model="group.description"/>
+		  </label>
+		</div>
+		<button type="submit" class="button button-block button-positive" >Submit</button>
+	</form>
+	</ion-content>
+    <div class="bar bar-footer bar-dark">
+        <a href="#/app"><div class="title"><button class="button button-icon icon ion-home"></button></div></a>
+    </div>
+</ion-pane>
+</ion-view>
