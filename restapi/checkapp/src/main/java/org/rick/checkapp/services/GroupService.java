@@ -17,6 +17,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.rick.checkapp.model.Group;
 import org.rick.checkapp.model.Users;
+import org.rick.checkapp.model.UsersGroups;
 
 /**
  * @author Rikin Patel
@@ -55,14 +56,22 @@ public class GroupService {
 	}
 
 	public Group createGroup(ServletContext context, Group group) {
-		List<Users> user = userService.getUsersByUserId(context, group.getOwnerId());
-		group.setOwner(user.get(0));
 		SessionFactory sessionFactory = (SessionFactory) context.getAttribute("SessionFactory");
 		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
+		
+		UsersGroups usersGroups = new UsersGroups();
 		try{
+			Users user = (Users) session.get(Users.class, group.getOwnerId());
 			group.setCreateDate(new Date());
 			session.save(group);
+			
+			usersGroups.setUser(user);
+			usersGroups.setGroup(group);
+			usersGroups.setOwner(true);
+			usersGroups.setAssignDate(new Date());
+			
+			session.save(usersGroups);
 			session.flush();
 			session.getTransaction().commit();
 			

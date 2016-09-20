@@ -5,16 +5,20 @@ package org.rick.checkapp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.solr.client.solrj.beans.Field;
 import org.hibernate.annotations.Parameter;
@@ -49,7 +53,7 @@ public class Users implements Serializable {
 	
 	@Transient
 	private String modelClass = this.getClass().getName();
-//	private Set<Group> groups;
+	private Set<UsersGroups> usersGroups= new HashSet<UsersGroups>();;
 	
 	@Id  
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -104,13 +108,15 @@ public class Users implements Serializable {
 	public void setModelClass(String className){
 		this.modelClass=className;
 	}
-//	@OneToMany(mappedBy = "owner")
-//	public Set<Group> getGroups() {
-//		return groups;
-//	}
-//	public void setGroups(Set<Group> groups) {
-//		this.groups = groups;
-//	}
+	@XmlTransient
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "primaryKey.user",
+            cascade = CascadeType.ALL)
+	public Set<UsersGroups> getUsersGroups() {
+		return usersGroups;
+	}
+	public void setUsersGroups(Set<UsersGroups> usersGroups) {
+		this.usersGroups = usersGroups;
+	}
 	@Type(type="password")
 	@Column(name="passwd")
 	public String getPassword() {
@@ -119,4 +125,7 @@ public class Users implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public void addUserGroup(UsersGroups userGroup) {
+        this.usersGroups.add(userGroup);
+    }
 }

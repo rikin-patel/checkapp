@@ -12,5 +12,6 @@
     <property name="show_sql">true</property>
     <mapping class="org.rick.checkapp.model.Users" />
     <mapping class="org.rick.checkapp.model.Group" />
+    <mapping class="org.rick.checkapp.model.UsersGroups" />
 </session-factory>
 </hibernate-configuration>

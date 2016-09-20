@@ -5,7 +5,10 @@ package org.rick.checkapp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,15 +17,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.solr.client.solrj.beans.Field;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 /**
  * @author Rikin Patel
@@ -36,9 +36,8 @@ public class Group implements Serializable{
 	private String groupName;
 	private String description;
 	private Date createDate;
-	@Transient
 	private Long ownerId;
-	private Users owner;
+	private Set<UsersGroups> usersGroups = new HashSet<UsersGroups>();
 	
 	@Transient
 	private String modelClass = this.getClass().getName();
@@ -74,16 +73,16 @@ public class Group implements Serializable{
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	@XmlTransient
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ownerid")
-	public Users getOwner() {
-		return owner;
-	}
-	public void setOwner(Users owner) {
-		this.owner = owner;
-	}
-	@Transient
+//	@XmlTransient
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "ownerid")
+//	public Users getOwner() {
+//		return owner;
+//	}
+//	public void setOwner(Users owner) {
+//		this.owner = owner;
+//	}
+
 	public Long getOwnerId() {
 		return ownerId;
 	}
@@ -99,4 +98,15 @@ public class Group implements Serializable{
 	public void setModelClass(String className){
 		this.modelClass=className;
 	}
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "primaryKey.group",
+            cascade = CascadeType.ALL)
+	public Set<UsersGroups> getUsersGroups() {
+		return usersGroups;
+	}
+	public void setUsersGroups(Set<UsersGroups> usersGroups) {
+		this.usersGroups = usersGroups;
+	}
+	public void addUserGroup(UsersGroups userGroup) {
+        this.usersGroups.add(userGroup);
+    }
 }
