@@ -98,6 +98,7 @@ public class Group implements Serializable{
 	public void setModelClass(String className){
 		this.modelClass=className;
 	}
+	@XmlTransient
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "primaryKey.group",
             cascade = CascadeType.ALL)
 	public Set<UsersGroups> getUsersGroups() {

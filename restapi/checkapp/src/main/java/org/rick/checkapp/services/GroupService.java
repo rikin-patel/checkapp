@@ -31,14 +31,14 @@ public class GroupService {
 	
 	@SuppressWarnings("unchecked")
 	public List<Group> getAllGroupsOwnedBy(ServletContext context, Long userId){
-		List<Users> user = userService.getUsersByUserId(context, userId);
 		SessionFactory sessionFactory = (SessionFactory) context.getAttribute("SessionFactory");
 		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
+		Users user = (Users) session.get(Users.class, userId);
 		List<Group> groups = null;
 		try{
 			groups = session.createCriteria(Group.class)
-									.add(Restrictions.eqOrIsNull("owner", user.get(0))).list();
+									.add(Restrictions.eqOrIsNull("ownerId", userId)).list();
 			session.flush();
 			session.getTransaction().commit();
 			System.out.println("Groups:"+groups);
