@@ -1,0 +1,2 @@
+INSERT INTO users(username, countrycode, phonenumber, email, passwd) values('Rikin Patel', '+91', '9900577698', 'riks.lovein@gmail.com', 'Testing1');
+INSERT INTO users(username, countrycode, phonenumber, email, passwd) values('Ranganath Pabbisetty', '+91', '9911577698', 'riks2.lovein@gmail.com', 'Testing2');
