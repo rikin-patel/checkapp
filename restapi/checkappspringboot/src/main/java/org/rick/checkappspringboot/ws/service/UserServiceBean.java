@@ -75,7 +75,7 @@ public class UserServiceBean implements UserService {
 	 */
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, 
-	readOnly=false)
+					readOnly=false)
 	public User updateUser(User user) {
 		User userToUpdate = findOne(user.getUserId());
 		if (userToUpdate == null) {
@@ -93,7 +93,7 @@ public class UserServiceBean implements UserService {
 	 */
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, 
-	readOnly=false)
+					readOnly=false)
 	public void delete(long id) {
 		userRepository.delete(id);
 
