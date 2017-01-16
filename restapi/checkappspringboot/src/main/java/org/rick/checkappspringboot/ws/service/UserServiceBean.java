@@ -23,6 +23,8 @@ public class UserServiceBean implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired private org.rick.checkappspringboot.ws.search.repository.UserRepository searchUserRepository;
 
 	/*
 	 * (non-Javadoc)
@@ -63,6 +65,7 @@ public class UserServiceBean implements UserService {
 		}
 
 		User savedUser = userRepository.save(user);
+		searchUserRepository.save(savedUser);
 		return savedUser;
 	}
 

@@ -10,26 +10,35 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.apache.solr.client.solrj.beans.Field;
+import org.springframework.data.solr.core.mapping.SolrDocument;
+
 /**
  * @author Siddharth
  * 
  */
 @Entity(name = "users")
+@SolrDocument
 public class User {
 
 	@Id
 	@Column(name = "userid")
 	@GeneratedValue
+	@Field("id")
 	private Long userId;
 	@Column(name = "username")
+	@Field("name")
 	private String userName;
 	@Column(name = "countrycode")
 	private String countryCode;
 	@Column(name = "phonenumber")
+	@Field("phone")
 	private String phoneNumber;
 	@Column(name = "email")
+	@Field("emailAddress")
 	private String emailAddress;
 	@Column(name = "reg_date")
+	@Field("createDate")
 	private Date regDate;
 	@Column(name = "passwd")
 	private String password;
