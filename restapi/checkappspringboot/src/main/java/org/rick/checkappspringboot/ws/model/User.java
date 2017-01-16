@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.solr.core.mapping.SolrDocument;
@@ -42,6 +43,9 @@ public class User {
 	private Date regDate;
 	@Column(name = "passwd")
 	private String password;
+	@Field("modelClass")
+	@Transient
+	private String modelClass = this.getClass().getCanonicalName();
 
 	public User() {
 
@@ -101,5 +105,13 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getModelClass() {
+		return modelClass;
+	}
+
+	public void setModelClass(String modelClass) {
+		this.modelClass = modelClass;
 	}
 }

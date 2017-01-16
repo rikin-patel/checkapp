@@ -4,6 +4,7 @@
 package org.rick.checkappspringboot.ws.service;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.rick.checkappspringboot.ws.model.User;
 import org.rick.checkappspringboot.ws.repository.UserRepository;
@@ -64,6 +65,7 @@ public class UserServiceBean implements UserService {
 			return null;
 		}
 
+		user.setRegDate(new Date());
 		User savedUser = userRepository.save(user);
 		searchUserRepository.save(savedUser);
 		return savedUser;
@@ -86,6 +88,7 @@ public class UserServiceBean implements UserService {
 			return null;
 		}
 		User savedUser = userRepository.save(user);
+		searchUserRepository.save(savedUser);
 		return savedUser;
 	}
 
