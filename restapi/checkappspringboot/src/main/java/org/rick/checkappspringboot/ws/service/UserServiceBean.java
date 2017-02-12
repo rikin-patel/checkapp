@@ -88,7 +88,7 @@ public class UserServiceBean implements UserService {
 			return null;
 		}
 		User savedUser = userRepository.save(user);
-		searchUserRepository.save(savedUser);
+//		searchUserRepository.save(savedUser);
 		return savedUser;
 	}
 

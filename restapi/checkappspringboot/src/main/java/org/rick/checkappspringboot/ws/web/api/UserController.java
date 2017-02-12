@@ -4,9 +4,8 @@
 package org.rick.checkappspringboot.ws.web.api;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
+import org.rick.checkappspringboot.ws.model.Group;
 import org.rick.checkappspringboot.ws.model.User;
 import org.rick.checkappspringboot.ws.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,26 @@ public class UserController {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} else {
 			return new ResponseEntity<User>(user, HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value = "/api/users/{userId}/owned-groups", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Collection<Group>> getOwnedGroupsOfUser(@PathVariable("userId") long userId) {
+		User user = userService.findOne(userId);
+		if (user == null) {
+			return new ResponseEntity<Collection<Group>>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<Collection<Group>>(user.getOwnedGroups(), HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value = "/api/users/{userId}/groups", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Collection<Group>> getGroupsOfUser(@PathVariable("userId") long userId) {
+		User user = userService.findOne(userId);
+		if (user == null) {
+			return new ResponseEntity<Collection<Group>>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<Collection<Group>>(user.getGroups(), HttpStatus.OK);
 		}
 	}
 
