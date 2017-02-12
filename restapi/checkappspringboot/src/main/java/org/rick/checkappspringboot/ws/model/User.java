@@ -22,6 +22,8 @@ import javax.persistence.Transient;
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Siddharth
  * 
@@ -55,9 +57,10 @@ public class User {
 	@Transient
 	private String modelClass = this.getClass().getCanonicalName();
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "users_groups", joinColumns = { @JoinColumn(name = "userid") },
 			inverseJoinColumns = { @JoinColumn(name = "groupid") })
+	@JsonIgnore
 	private List<Group> groups = new ArrayList<Group>();
 	
 //	@OneToMany(fetch = FetchType.LAZY, mappedBy="ownerId", cascade=CascadeType.ALL)

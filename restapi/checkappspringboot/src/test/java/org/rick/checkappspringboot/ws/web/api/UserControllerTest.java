@@ -53,5 +53,17 @@ public class UserControllerTest extends AbstractControllerTest {
 		Assert.assertEquals("Failure - Expected Return Type 200", 200, status);
 		Assert.assertTrue("Failure - Expected Size of Content Greater Than 0", content.length() > 0);
 	}
+	
+	@Test
+	public void testGetUserGroups() throws Exception {
+		String uri= "/api/users/1/groups";
+		MvcResult results = mvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON)).andReturn();
+		
+		String content = results.getResponse().getContentAsString();
+		int status = results.getResponse().getStatus();
+		
+		Assert.assertEquals("Failure - Expected Return Type 200", 200, status);
+		Assert.assertTrue("Failure - Expected Size of Content Greater Than 0", content.length() > 0);
+	}
 
 }

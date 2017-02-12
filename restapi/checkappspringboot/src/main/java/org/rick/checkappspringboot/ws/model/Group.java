@@ -9,10 +9,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author pateriki
@@ -37,7 +40,8 @@ public class Group {
 	@Column(name = "create_date")
 	private Date createDate;
 	
-	@ManyToMany(mappedBy="groups")
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.EAGER, mappedBy="groups")
 	private List<User> users = new ArrayList<User>();
 	
 //	@ManyToOne(fetch = FetchType.LAZY)

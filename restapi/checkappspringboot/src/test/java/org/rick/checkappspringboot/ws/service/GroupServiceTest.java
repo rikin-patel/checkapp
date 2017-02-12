@@ -27,6 +27,31 @@ public class GroupServiceTest extends AbstractTest {
 	@After
 	public void tearDown() throws Exception {
 	}
+	
+	@Test
+	public void testFindAllGroups(){
+		Collection<Group> groups = groupService.findAll();
+		Assert.assertNotNull(groups);
+		Assert.assertTrue(groups.size() > 0);
+	}
+	
+	@Test
+	public void testFindByOwner(){
+		Collection<Group> groups = groupService.findByOwnerId(2L);
+		Assert.assertNotNull(groups);
+		Assert.assertEquals("Failure : Expected : 2 Found" + groups.size(), 2L, groups.size());
+	}
+	
+	@Test
+	public void testFindGroupsOfUser(){
+		Collection<User> users = groupService.findOne(3).getUsers();
+		Assert.assertNotNull(users);
+		Assert.assertEquals("Failure : Expected : 2 Found" + users.size(), 2L, users.size());
+		
+		Collection<User> singleUser = groupService.findOne(4).getUsers();
+		Assert.assertNotNull(singleUser);
+		Assert.assertEquals("Failure : Expected : 2 Found" + singleUser.size(), 1L, singleUser.size());
+	}
 
 	@Test
 	public void testAddGroup(){
@@ -50,16 +75,51 @@ public class GroupServiceTest extends AbstractTest {
 		Assert.assertNotNull("Failure - Object found null, expected Not Null", savedGroup.getGroupId());
 		Assert.assertEquals("Failure - Expected TestGroup, Found:" + savedGroup.getGroupName(), "TestGroup", savedGroup.getGroupName());
 		
-		Assert.assertEquals("Failure : Expected : 1", 1L, groupService.findAll().size());
+		Assert.assertEquals("Failure : Expected : 5", 5L, groupService.findAll().size());
 		Assert.assertEquals("Failure : Expected : 1", 1L, savedGroup.getUsers().size());
 		
 		Assert.assertNotNull("Failure - Object found null, expected Not Null", savedGroup.getOwnerId());
 		
-		Collection<Group> findByOwnerGroups =  groupService.findByOwnerId(1L);
-		Assert.assertEquals("Failure: Expected 1, found:"+findByOwnerGroups.size(), 1L, findByOwnerGroups.size());
-		System.out.println("FindByOwners Groups:::" + findByOwnerGroups);
-		Assert.assertTrue(findByOwnerGroups.contains(savedGroup));
+	}
+	
+	@Test
+	public void testDeleteGroup(){
+		Group group = new Group();
+		group.setCreateDate(new Date());
+		group.setDescription("Test Group Deletion");
+		group.setGroupName("TestGroup");
 		
+		group.getUsers().add(userService.findOne(1L));
+		group.setOwnerId(1L);
+		
+		Group savedGroup = groupService.createGroup(group);
+		long savedGroupId = savedGroup.getGroupId();
+		groupService.delete(savedGroup.getGroupId());
+		
+		Assert.assertNull(groupService.findOne(savedGroupId));
 	}
 
+	@Test
+	public void testUpdateGroup(){
+		Group group = groupService.findOne(4L);
+		String groupName = group.getGroupName();
+		
+		group.setGroupName(groupName + " Modified");
+		Group newGroup = groupService.updateGroup(group);
+		
+		Assert.assertEquals("Failed,  Found::" + newGroup.getGroupName(), groupName + " Modified", newGroup.getGroupName());
+	}
+	
+	@Test
+	public void testUpdateInvalidGroup(){
+		Group group = groupService.findOne(4L);
+		Group newSavedGroup = groupService.createGroup(group);
+		Assert.assertNull(newSavedGroup);
+		
+		group.setGroupId(0L);
+		Group newUpdatedGroup = groupService.updateGroup(group);
+		
+		Assert.assertNull(newUpdatedGroup);
+	}
+	
 }
