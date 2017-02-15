@@ -3,6 +3,7 @@
  */
 package org.rick.checkappspringboot.ws.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import org.rick.checkappspringboot.AbstractTest;
 import org.rick.checkappspringboot.ws.model.Group;
 import org.rick.checkappspringboot.ws.model.User;
+import org.rick.checkappspringboot.ws.model.UsersGroups;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,9 @@ public class UserServiceTest extends AbstractTest {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private GroupService groupService;
 
 	/**
 	 * @throws java.lang.Exception
@@ -103,21 +108,13 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void testAddInvalidUser(){
 		
-		Group group = new Group();
-		group.setGroupName("TestGroup2");
-		group.setDescription("Test Group ManyToMany");
-		group.setCreateDate(new Date());
-		
 		User user = new User();
-		user.setUserId(0L);
 		user.setUserName("riks.lovein");
 		user.setEmailAddress("riks.lovein@gmail.com");
 		user.setCountryCode("+91");
 		user.setPassword("Testing@123");
 		user.setPhoneNumber("8424758742");
 		user.setRegDate(new Date());
-		user.getGroups().add(group);
-		user.getOwnedGroups().add(group);
 		
 		User createdUser = userService.createUser(user);
 		Assert.assertNotNull("Failure - Object found null, expected Not Null", createdUser);
@@ -126,11 +123,14 @@ public class UserServiceTest extends AbstractTest {
 		
 		Assert.assertEquals("Failure : Expected : 3", 3L, userService.findAll().size());
 		
-		List<Group> savedGroup = createdUser.getGroups();
-		Assert.assertEquals("Failure - Expected 1,  Found ", savedGroup.size(), 1);	
+		List<Group> savedGroup = new ArrayList<Group>();
+		for (UsersGroups group2 : createdUser.getUsersGroups()) {
+			savedGroup.add(group2.getGroup());
+		}
+		Assert.assertEquals("Failure - Expected 0,  Found ", savedGroup.size(), 0);	
 		
 		List<Group> ownedGroups = createdUser.getOwnedGroups();
-		Assert.assertEquals("Failure - Expected 1,  Found ", ownedGroups.size(), 1);
+		Assert.assertEquals("Failure - Expected 0,  Found ", ownedGroups.size(), 0);
 		
 	}
 	

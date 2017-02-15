@@ -57,11 +57,14 @@ public class User {
 	@Transient
 	private String modelClass = this.getClass().getCanonicalName();
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "users_groups", joinColumns = { @JoinColumn(name = "userid") },
-			inverseJoinColumns = { @JoinColumn(name = "groupid") })
-	@JsonIgnore
-	private List<Group> groups = new ArrayList<Group>();
+//	@ManyToMany(fetch = FetchType.EAGER)
+//	@JoinTable(name = "users_groups", joinColumns = { @JoinColumn(name = "userid") },
+//			inverseJoinColumns = { @JoinColumn(name = "groupid") })
+//	@JsonIgnore
+//	private List<Group> groups = new ArrayList<Group>();
+	
+	@OneToMany(mappedBy="user")
+	private List<UsersGroups> usersGroups = new ArrayList<UsersGroups>();
 	
 //	@OneToMany(fetch = FetchType.LAZY, mappedBy="ownerId", cascade=CascadeType.ALL)
 	@OneToMany
@@ -136,13 +139,13 @@ public class User {
 		this.modelClass = modelClass;
 	}
 
-	public List<Group> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(List<Group> groups) {
-		this.groups = groups;
-	}
+//	public List<Group> getGroups() {
+//		return groups;
+//	}
+//
+//	public void setGroups(List<Group> groups) {
+//		this.groups = groups;
+//	}
 
 	public List<Group> getOwnedGroups() {
 		return ownedGroups;
@@ -150,6 +153,14 @@ public class User {
 
 	public void setOwnedGroups(List<Group> ownedGroups) {
 		this.ownedGroups = ownedGroups;
+	}
+
+	public List<UsersGroups> getUsersGroups() {
+		return usersGroups;
+	}
+
+	public void setUsersGroups(List<UsersGroups> usersGroups) {
+		this.usersGroups = usersGroups;
 	}
 
 	@Override

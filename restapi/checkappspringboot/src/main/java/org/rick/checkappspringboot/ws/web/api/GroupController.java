@@ -3,10 +3,12 @@
  */
 package org.rick.checkappspringboot.ws.web.api;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.rick.checkappspringboot.ws.model.Group;
 import org.rick.checkappspringboot.ws.model.User;
+import org.rick.checkappspringboot.ws.model.UsersGroups;
 import org.rick.checkappspringboot.ws.service.GroupService;
 import org.rick.checkappspringboot.ws.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +56,10 @@ public class GroupController {
 	
 	@RequestMapping(value="/api/groups/{groupid}/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Collection<User>> getUsersOfGroup(@PathVariable("groupid") long groupId){
-		Collection<User> allUsers = groupService.findOne(groupId).getUsers();
+		Collection<User> allUsers = new ArrayList<User>();
+		for (UsersGroups userGroups : groupService.findOne(groupId).getUsersGroups()) {
+			allUsers.add(userGroups.getUser());
+		}
 		if(allUsers == null || allUsers.isEmpty()){
 			return new ResponseEntity<Collection<User>>(HttpStatus.NOT_FOUND);
 		} else {

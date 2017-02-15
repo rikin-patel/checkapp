@@ -26,6 +26,8 @@ CREATE TABLE groups (
 CREATE TABLE users_groups (
   userid bigint NOT NULL,
   groupid bigint NOT NULL,
+  isowner boolean DEFAULT NULL,
+  assign_date TIMESTAMP DEFAULT NULL,
   PRIMARY KEY (userid,groupid),
   CONSTRAINT users_groups_ibfk_1 FOREIGN KEY (userid) REFERENCES users (userid),
   CONSTRAINT users_groups_ibfk_2 FOREIGN KEY (groupid) REFERENCES groups (groupid)

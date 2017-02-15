@@ -1,7 +1,9 @@
 package org.rick.checkappspringboot.ws.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -10,6 +12,7 @@ import org.junit.Test;
 import org.rick.checkappspringboot.AbstractTest;
 import org.rick.checkappspringboot.ws.model.Group;
 import org.rick.checkappspringboot.ws.model.User;
+import org.rick.checkappspringboot.ws.model.UsersGroups;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class GroupServiceTest extends AbstractTest {
@@ -44,11 +47,17 @@ public class GroupServiceTest extends AbstractTest {
 	
 	@Test
 	public void testFindGroupsOfUser(){
-		Collection<User> users = groupService.findOne(3).getUsers();
+		List<User> users = new ArrayList<User>();
+		for (UsersGroups userGroup : groupService.findOne(3).getUsersGroups()) {
+			users.add(userGroup.getUser());
+		}
 		Assert.assertNotNull(users);
 		Assert.assertEquals("Failure : Expected : 2 Found" + users.size(), 2L, users.size());
 		
-		Collection<User> singleUser = groupService.findOne(4).getUsers();
+		Collection<User> singleUser = new ArrayList<User>();
+		for (UsersGroups userGroup : groupService.findOne(4).getUsersGroups()) {
+			singleUser.add(userGroup.getUser());
+		}
 		Assert.assertNotNull(singleUser);
 		Assert.assertEquals("Failure : Expected : 2 Found" + singleUser.size(), 1L, singleUser.size());
 	}
@@ -60,14 +69,14 @@ public class GroupServiceTest extends AbstractTest {
 		group.setDescription("Test Group Created");
 		group.setGroupName("TestGroup");
 		
-		User user = new User();
-		user.setUserName("riks.lovein");
-		user.setEmailAddress("riks.lovein@gmail.com");
-		user.setCountryCode("+91");
-		user.setPassword("Testing@123");
-		user.setPhoneNumber("8424758742");
-		user.setRegDate(new Date());
-		group.getUsers().add(user);
+		UsersGroups userGroups = new UsersGroups();
+		userGroups.setUser(userService.findOne(1L));
+		userGroups.setGroup(group);
+		userGroups.setAssignDate(new Date());
+		userGroups.setOwner(false);
+		
+		group.getUsersGroups().add(userGroups);
+//		user.getUsersGroups().add(userGroups);
 		group.setOwnerId(1L);
 		
 		Group savedGroup = groupService.createGroup(group);
@@ -76,7 +85,7 @@ public class GroupServiceTest extends AbstractTest {
 		Assert.assertEquals("Failure - Expected TestGroup, Found:" + savedGroup.getGroupName(), "TestGroup", savedGroup.getGroupName());
 		
 		Assert.assertEquals("Failure : Expected : 5", 5L, groupService.findAll().size());
-		Assert.assertEquals("Failure : Expected : 1", 1L, savedGroup.getUsers().size());
+		Assert.assertEquals("Failure : Expected : 1", 1L, savedGroup.getUsersGroups().size());
 		
 		Assert.assertNotNull("Failure - Object found null, expected Not Null", savedGroup.getOwnerId());
 		
@@ -89,7 +98,6 @@ public class GroupServiceTest extends AbstractTest {
 		group.setDescription("Test Group Deletion");
 		group.setGroupName("TestGroup");
 		
-		group.getUsers().add(userService.findOne(1L));
 		group.setOwnerId(1L);
 		
 		Group savedGroup = groupService.createGroup(group);

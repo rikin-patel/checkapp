@@ -7,15 +7,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQuery;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.OneToMany;
 
 /**
  * @author pateriki
@@ -40,9 +38,12 @@ public class Group {
 	@Column(name = "create_date")
 	private Date createDate;
 	
-	@JsonIgnore
-	@ManyToMany(fetch=FetchType.EAGER, mappedBy="groups")
-	private List<User> users = new ArrayList<User>();
+//	@JsonIgnore
+//	@ManyToMany(fetch=FetchType.EAGER, mappedBy="groups")
+//	private List<User> users = new ArrayList<User>();
+	
+	@OneToMany(mappedBy="group", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<UsersGroups> usersGroups = new ArrayList<UsersGroups>();
 	
 //	@ManyToOne(fetch = FetchType.LAZY)
 //	@JoinColumn(name="userId")
@@ -85,13 +86,13 @@ public class Group {
 		this.createDate = createDate;
 	}
 
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
+//	public List<User> getUsers() {
+//		return users;
+//	}
+//
+//	public void setUsers(List<User> users) {
+//		this.users = users;
+//	}
 
 	public Long getOwnerId() {
 		return ownerId;
@@ -99,6 +100,14 @@ public class Group {
 
 	public void setOwnerId(Long owner) {
 		this.ownerId = owner;
+	}
+
+	public List<UsersGroups> getUsersGroups() {
+		return usersGroups;
+	}
+
+	public void setUsersGroups(List<UsersGroups> usersGroups) {
+		this.usersGroups = usersGroups;
 	}
 
 	@Override

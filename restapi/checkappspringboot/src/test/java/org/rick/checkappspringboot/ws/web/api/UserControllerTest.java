@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.rick.checkappspringboot.AbstractControllerTest;
 import org.rick.checkappspringboot.ws.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -64,6 +65,17 @@ public class UserControllerTest extends AbstractControllerTest {
 		
 		Assert.assertEquals("Failure - Expected Return Type 200", 200, status);
 		Assert.assertTrue("Failure - Expected Size of Content Greater Than 0", content.length() > 0);
+		
+	}
+	
+	@Test
+	public void testGetInvalidUserGroups() throws Exception {
+		String uri= "/api/users/10/groups";
+		MvcResult results = mvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON)).andReturn();
+		int status = results.getResponse().getStatus();
+		
+		Assert.assertEquals("Failure - Expected Return Type 404", 404, status);
+		
 	}
 
 }
