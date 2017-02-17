@@ -15,6 +15,9 @@ CREATE TABLE `task_owner` (
   `userid` bigint(20) NOT NULL,
   `assigned_date` date DEFAULT NULL,
   `assignedby` bigint(20) DEFAULT NULL,
+  `iscompleted` tinyint(1) DEFAULT NULL,
+  `complete_date` date DEFAULT NULL,
+
   PRIMARY KEY (`taskid`,`userid`),
   KEY `userid` (`userid`),
   KEY `assignedby` (`assignedby`),
@@ -29,8 +32,6 @@ CREATE TABLE `tasks` (
   `description` varchar(100) DEFAULT NULL,
   `task_creator` bigint(20) DEFAULT NULL,
   `complitionby_date` date DEFAULT NULL,
-  `iscompleted` tinyint(1) DEFAULT NULL,
-  `complete_date` date DEFAULT NULL,
   `groupid` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`taskid`),
   KEY `task_creator` (`task_creator`),

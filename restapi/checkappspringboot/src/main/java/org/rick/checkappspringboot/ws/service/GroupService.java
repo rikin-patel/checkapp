@@ -19,9 +19,9 @@ public interface GroupService {
 		
 		Group findOne(long groupId);
 		
-		Group createGroup(Group user);
+		Group createGroup(Group group);
 		
-		Group updateGroup(Group user);
+		Group updateGroup(Group group);
 		
 		void delete (long id);
 

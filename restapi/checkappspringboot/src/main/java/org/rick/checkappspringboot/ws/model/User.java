@@ -70,6 +70,10 @@ public class User {
 	@OneToMany
 	@JoinColumn(name="ownerid", referencedColumnName="userid")
 	private List<Group> ownedGroups = new ArrayList<Group>();
+	
+	@OneToMany
+	@JoinColumn(name="task_creator", referencedColumnName="userid")
+	private List<Task> createdTasks = new ArrayList<Task>();
 
 	public User() {
 
@@ -161,6 +165,14 @@ public class User {
 
 	public void setUsersGroups(List<UsersGroups> usersGroups) {
 		this.usersGroups = usersGroups;
+	}
+
+	public List<Task> getCreatedTasks() {
+		return createdTasks;
+	}
+
+	public void setCreatedTasks(List<Task> createdTasks) {
+		this.createdTasks = createdTasks;
 	}
 
 	@Override

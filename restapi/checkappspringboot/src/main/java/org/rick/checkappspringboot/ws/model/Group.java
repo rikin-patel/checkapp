@@ -4,6 +4,7 @@
 package org.rick.checkappspringboot.ws.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 /**
@@ -49,6 +51,10 @@ public class Group {
 //	@JoinColumn(name="userId")
 	@Column(name="ownerid")
 	private Long ownerId;
+	
+	@OneToMany
+	@JoinColumn(name="groupid", referencedColumnName="groupid")
+	private Collection<Task> groupTasks = new ArrayList<Task>();
 	
 	public Group(){
 		
@@ -108,6 +114,14 @@ public class Group {
 
 	public void setUsersGroups(List<UsersGroups> usersGroups) {
 		this.usersGroups = usersGroups;
+	}
+
+	public Collection<Task> getGroupTasks() {
+		return groupTasks;
+	}
+
+	public void setGroupTasks(Collection<Task> groupTasks) {
+		this.groupTasks = groupTasks;
 	}
 
 	@Override
